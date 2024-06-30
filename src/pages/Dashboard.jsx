@@ -157,9 +157,9 @@ const Dashboard = () => {
                         </div>
                     )}
                     {healthyLifeSuggestions.length > 0 && (
-                        <div className='mt-5 w-screen'>
+                        <div className='mt-5'>
                             <h2 className='text-lg font-semibold'>Healthy Life Suggestions:</h2>
-                            <div className='overflow-x-auto w-11/12'>
+                            <div className='mb-5'>
                                 <table className=' bg-white'>
                                     <thead>
                                         <tr>
