@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Topbar } from '../components/Topbar';
 import { Input, Button, Select, Option } from '@material-tailwind/react';
-import QRCode from 'qrcode.react';
 import { ScaleLoader } from 'react-spinners';
+import { useNavigate } from 'react-router-dom';
+import { useAldoAlert } from 'aldo-alert';
 
 const Dashboard = () => {
+    const { showAldoAlert } = useAldoAlert();
+
+    const navigate = useNavigate();
     const [patientDetails, setPatientDetails] = useState({
         name: '',
         age: '',
@@ -14,8 +18,23 @@ const Dashboard = () => {
     });
 
     const [loading, setLoading] = useState(false);
+    const [loadingPlan, setLoadingPlan] = useState(false);
     const [healthSuggestions, setHealthSuggestions] = useState('');
     const [healthyLifeSuggestions, setHealthyLifeSuggestions] = useState([]);
+
+
+    const handleAddToHealthPlan = () => {
+        setLoadingPlan(true); // Start loading state
+
+        // Simulate delay for demonstration (1.5 seconds)
+        setTimeout(() => {
+            setLoadingPlan(false); // End loading state
+            navigate('/health-plan'); // Navigate to /health-plan
+            showAldoAlert('Sucessfully added to health plan!', 'warning');
+        }, 1500);
+    };
+
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -180,8 +199,12 @@ const Dashboard = () => {
                                         ))}
                                     </tbody>
                                 </table>
-                                <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                                    Add this to your health plan
+                                <button onClick={handleAddToHealthPlan} className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                                    {loadingPlan ? (
+                                        <ScaleLoader color='#ffffff' loadingPlan={loadingPlan} height={16} width={6} radius={2} margin={3} />
+                                    ) : (
+                                        'Add this to your health plan'
+                                    )}
                                 </button>
 
                             </div>
